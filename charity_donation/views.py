@@ -7,13 +7,16 @@ class LandingPage(View):
 
     def get(self, request):
         donations = Donation.objects.all()
-        institutions = Institution.objects.filter(donation__quantity__gt=0)
+        institutions_already_donated = Institution.objects.filter(donation__quantity__gt=0)
+        all_institutions = Institution.objects.all()
+        print(all_institutions[0].categories.all())
         bags_qty = 0
         for bags in donations:
             bags_qty += bags.quantity
 
         return render(request, 'index.html', {'bags_qty': bags_qty,
-                                              'institution': institutions.count()})
+                                              'institutions_already_donated': institutions_already_donated.count(),
+                                              'all_institutions': all_institutions})
 
 
 class Login(View):
