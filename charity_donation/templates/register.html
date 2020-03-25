@@ -2,29 +2,39 @@
 {% load static %}
 
 {% block content %}
-<section class="login-page">
-    <h2>Załóż konto</h2>
-    <form>
-        <div class="form-group">
-            <input type="text" name="name" placeholder="Imię"/>
-        </div>
-        <div class="form-group">
-            <input type="text" name="surname" placeholder="Nazwisko"/>
-        </div>
-        <div class="form-group">
-            <input type="email" name="email" placeholder="Email"/>
-        </div>
-        <div class="form-group">
-            <input type="password" name="password" placeholder="Hasło"/>
-        </div>
-        <div class="form-group">
-            <input type="password" name="password2" placeholder="Powtórz hasło"/>
-        </div>
-
-        <div class="form-group form-group--buttons">
-            <a href="login.html" class="btn btn--without-border">Zaloguj się</a>
-            <button class="btn" type="submit">Załóż konto</button>
-        </div>
-    </form>
-</section>
+    <section class="login-page">
+        <h2>Załóż konto</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.email.label }}
+            <div class="form-group">
+                {{ form.username }}
+            </div>
+            {{ form.email.errors }}
+            {{ form.first_name.label }}
+            <div class="form-group">
+                {{ form.first_name }}
+            </div>
+            {{ form.first_name.errors }}
+            {{ form.last_name.label }}
+            <div class="form-group">
+                {{ form.last_name }}
+            </div>
+            {{ form.last_name.errors }}
+            {{ form.password1.label }}
+            <div class="form-group">
+                {{ form.password1 }}
+            </div>
+            {{ form.password1.errors }}
+            {{ form.password2.label }}
+            <div class="form-group">
+                {{ form.password2 }}
+            </div>
+            {{ form.password2.errors }}
+            <div class="form-group form-group--buttons">
+                <a href="{% url "login" %}" class="btn btn--without-border">Zaloguj się</a>
+                <button class="btn" type="submit">Załóż konto</button>
+            </div>
+        </form>
+    </section>
 {% endblock %}
