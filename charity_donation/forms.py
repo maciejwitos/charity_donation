@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, UserModel
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelForm
+from charity_donation.models import *
 
 
 class RegisterForm(UserCreationForm):
@@ -15,8 +16,9 @@ class RegisterForm(UserCreationForm):
 
 class LoginForm(forms.Form):
 
-        username = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': "Email"}))
-        password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
+    username = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': "Email"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
+
 
 
 

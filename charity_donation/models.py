@@ -5,6 +5,9 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=32)
 
+    def __str__(self):
+        return self.name
+
 
 INSTITUTION_TYPE = ((0, 'Fundacja'),
                     (1, 'Organizacja pozarządowa'),

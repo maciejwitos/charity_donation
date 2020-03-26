@@ -23,5 +23,6 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
     path('register/', Register.as_view(), name='register'),
-    path('donate/form/', DonationForm.as_view(), name='donate-form'),
+    path('donate/form/', DonationView.as_view(), name='donate-form'),
+    path('donate/form/confirmation/', ConfirmationView.as_view(), name='form-confirmation'),
 ]
