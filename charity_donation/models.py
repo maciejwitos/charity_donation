@@ -35,6 +35,7 @@ class Donation(models.Model):
     pickup_date = models.DateField()
     pickup_time = models.TimeField()
     pickup_comment = models.CharField(max_length=140)
+    collected = models.BooleanField(default=False, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):

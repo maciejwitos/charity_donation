@@ -2,28 +2,35 @@
 {% load static %}
 {% block content %}
     <section>
-    <h2></h2>
-        <div style="padding-bottom: 50px;">
-        <table style="border-style: dashed; font-size: x-large; margin: auto">
-            <tbody>
-            <tr>
-                <td>Login:</td>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <td>Imię:</td>
-                <td>{{ user.first_name }}</td>
-            </tr>
-            <tr>
-                <td>Nazwisko:</td>
-                <td>{{ user.last_name }}</td>
-            </tr>
-            <tr>
-                <td>Dołączyłeś:</td>
-                <td>{{ user.date_joined }}</td>
-            </tr>
-            </tbody>
-        </table>
-            </div>
+        <h2></h2>
+        <div style="padding-bottom: 10px;">
+            <table style="border-style: dashed; font-size: x-large; margin: auto">
+                <tbody>
+                <tr>
+                    <td>Login:</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td>Imię:</td>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Nazwisko:</td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Dołączyłeś:</td>
+                    <td>{{ user.date_joined }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <p class="container container--70" style="padding-bottom: 10px">
+                <a href="" class="btn btn--without-border" style="margin: auto">Dodaj fundację</a>
+                <a href="" class="btn btn--without-border" style="margin: auto">Zorganizuj dotację</a>
+                <a href="" class="btn btn--without-border" style="margin: auto">Edytuj profil</a>
+            <a href="{% url "user-donations" %}" class="btn btn--without-border" style="margin: auto">Zobacz wszystkie swoje dotacje</a>
+            </p>
     </section>
+
 {% endblock %}

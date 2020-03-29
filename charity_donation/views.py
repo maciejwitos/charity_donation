@@ -74,14 +74,6 @@ class DonationView(LoginRequiredMixin, View):
                                              'institutions': institutions})
 
     def post(self, request):
-        print(request.POST.get('bags'))
-        print(request.POST.get('address'))
-        print(request.POST.get('city'))
-        print(request.POST.get('zip_code'))
-        print(request.POST.get('pickup_date'))
-        print(request.POST.get('pickp_time'))
-        print(request.POST.get('pickup_comment'))
-        print(request.user)
         new_donation = Donation.objects.create(quantity=request.POST.get('bags'),
                                                address=request.POST.get('address'),
                                                city=request.POST.get('city'),
@@ -107,3 +99,10 @@ class UserProfile(View):
 
     def get(self, request):
         return render(request, 'user_profile.html')
+
+
+class UserDonations(View):
+
+    def get(self, request):
+        donations = Donation.objects.filter(user=request.user).order_by('-pickup_date')
+        return render(request, 'user_donations.html', {'donations': donations})
