@@ -104,5 +104,5 @@ class UserProfile(View):
 class UserDonations(View):
 
     def get(self, request):
-        donations = Donation.objects.filter(user=request.user).order_by('-pickup_date')
+        donations = Donation.objects.filter(user=request.user).order_by('-pickup_date').order_by('collected')
         return render(request, 'user_donations.html', {'donations': donations})

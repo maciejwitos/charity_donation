@@ -5,7 +5,8 @@
 
         <h2></h2>
         <div style="padding-bottom: 30px">
-            <table border="" style="border-collapse: collapse; border-style: hidden; font-size: x-large; margin: auto; column-span: all;">
+            <table border=""
+                   style="border-collapse: collapse; border-style: hidden; font-size: x-large; margin: auto; column-span: all;">
                 <tbody>
                 <tr>
                     <th style="padding: 7px;">#</th>
@@ -13,6 +14,7 @@
                     <th>Przekazanych worków</th>
                     <th>Czego</th>
                     <th>Data doręczenia</th>
+                    <th>Status</th>
                 </tr>
                 {% for donation in donations %}
                     <tr>
@@ -25,6 +27,11 @@
                             {% endfor %}
                         </td>
                         <td>{{ donation.pickup_date }}</td>
+                        {% if donation.collected == False %}
+                            <td>Nieodebrana</td>
+                        {% else %}
+                            <td>Odebrana</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>
