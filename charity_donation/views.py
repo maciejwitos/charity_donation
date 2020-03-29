@@ -101,3 +101,9 @@ class ConfirmationView(View):
 
     def get(self, request):
         return render(request, 'form-confirmation.html')
+
+
+class UserProfile(View):
+
+    def get(self, request):
+        return render(request, 'user_profile.html')
