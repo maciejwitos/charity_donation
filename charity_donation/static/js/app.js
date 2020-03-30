@@ -238,62 +238,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // TODO: get data from inputs and show them in summary
 
-                this.categoriesArray = [];
-                this.categories = document.querySelectorAll('#categories');
-                this.institutions = document.querySelectorAll("#institution-categories");
+            this.categoriesArray = [];
+            this.categories = document.querySelectorAll('#categories');
+            this.institutions = document.querySelectorAll("#institution-categories");
+
+
+            if (this.currentStep === 1)  {
 
                 for (var i = 0; i < this.categories.length; i++) {
-                    if (this.categories[i].checked === true) {
-                        this.categoriesArray.push(this.categories[i].value)
-                    }
-                }
-                // TODO: if only one category is picked search by one
-                for (var j = 0; j < this.institutions.length; j++) {
-
-                    if (this.categoriesArray.includes(this.institutions[j].value) === true) {
-                        this.institutions[j].parentElement.style.display = 'block'
-                    }
+                    this.categories[i].checked = false
                 }
 
-                this.bagsQuantity = document.getElementById('bag-quantity');
-                this.institutionPicked = document.getElementById("institution-name");
-                this.categoriesArrayId = document.getElementById('categories-array').value = this.categoriesArray;
-
-                document.getElementById('summary-bags-qty').innerText = this.bagsQuantity.value + 'szt. 60l worków';
-                document.getElementById('summary-institution-name').innerText = this.institutionPicked.value;
-                document.getElementById('summary-street').innerText = document.getElementById('address-street').value;
-                document.getElementById('summary-city').innerText = document.getElementById('address-city').value;
-                document.getElementById('summary-zipcode').innerText = document.getElementById('address-zipcode').value;
-                document.getElementById('summary-phone').innerText = document.getElementById('summary-phone').value;
-                document.getElementById('summary-pickup-date').innerText = document.getElementById('pickup-date').value;
-                document.getElementById('summary-pickup-time').innerText = document.getElementById('pickup-time').value;
-                document.getElementById('summary-comment').innerText = document.getElementById('comment').value;
-
-        }
-
-            /**
-             * Submit form
-             *
-             * TODO: validation, send data to server
-             */
-            submit(e)
-            {
-                this.currentStep++;
-                this.updateForm();
+                for (var i = 0; i < this.institutions.length; i++){
+                    this.institutions[i].parentElement.style.display = 'none';
+                }
             }
+
+            for (var i = 0; i < this.categories.length; i++) {
+                if (this.categories[i].checked === true) {
+                    this.categoriesArray.push(this.categories[i].value)
+                }
+            }
+
+            for (var i = 0; i < this.institutions.length; i++) {
+                if (this.categoriesArray.includes(this.institutions[i].value) === true) {
+                    this.institutions[i].parentElement.style.display = 'block'
+                }
+            }
+
+            this.bagsQuantity = document.getElementById('bag-quantity');
+            this.institutionPicked = document.querySelectorAll("#institution-choice input");
+            for (var i = 0; i < this.institutionPicked.length; i++) {
+                if (this.institutionPicked[i].checked) {
+                    this.institutionName = this.institutionPicked[i].value
+                }
+            }
+            this.categoriesArrayId = document.getElementById('categories-array').value = this.categoriesArray;
+
+            document.getElementById('summary-bags-qty').innerText = this.bagsQuantity.value + 'szt. 60l worków';
+            document.getElementById('summary-institution-name').innerText = this.institutionName;
+            document.getElementById('summary-street').innerText = document.getElementById('address-street').value;
+            document.getElementById('summary-city').innerText = document.getElementById('address-city').value;
+            document.getElementById('summary-zipcode').innerText = document.getElementById('address-zipcode').value;
+            document.getElementById('summary-phone').innerText = document.getElementById('summary-phone').value;
+            document.getElementById('summary-pickup-date').innerText = document.getElementById('pickup-date').value;
+            document.getElementById('summary-pickup-time').innerText = document.getElementById('pickup-time').value;
+            document.getElementById('summary-comment').innerText = document.getElementById('comment').value;
+
         }
 
-        const
+        /**
+         * Submit form
+         *
+         * TODO: validation, send data to server
+         */
+        submit(e) {
+            this.currentStep++;
+            this.updateForm();
+        }
+    }
+
+    const
         form = document.querySelector(".form--steps");
 
-        if(form
-
-    !==
-        null
-    ) {
-        new
-
-        FormSteps(form);
+    if (form !== null) {
+        new FormSteps(form);
     }
 });
 

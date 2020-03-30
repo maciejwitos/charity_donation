@@ -70,7 +70,7 @@
                     <h3>Wybierz organizacje, której chcesz pomóc:</h3>
 
                     {% for institution in institutions %}
-                        <div class="form-group form-group--checkbox" style="display: none">
+                        <div id="institution-choice" class="form-group form-group--checkbox" style="display: none">
                             {% for category in institution.categories.all %}
                                 <input id="institution-categories" type="hidden"
                                        value="{{ category }}">
