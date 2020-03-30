@@ -11,7 +11,7 @@ class LandingPage(View):
 
     def get(self, request):
         donations = Donation.objects.all()
-        institutions_already_donated = Institution.objects.filter(donation__quantity__gt=0)
+        institutions_already_donated = Institution.objects.all()
         all_institutions = Institution.objects.all()
         bags_qty = 0
         for bags in donations:
@@ -74,6 +74,7 @@ class DonationView(LoginRequiredMixin, View):
                                              'institutions': institutions})
 
     def post(self, request):
+        categories = request.POST.get('categories-choose').split(',')
         new_donation = Donation.objects.create(quantity=request.POST.get('bags'),
                                                address=request.POST.get('address'),
                                                city=request.POST.get('city'),
@@ -82,9 +83,11 @@ class DonationView(LoginRequiredMixin, View):
                                                pickup_date=request.POST.get('date'),
                                                pickup_time=request.POST.get('time'),
                                                pickup_comment=request.POST.get('more_info'),
-                                               user_id=request.user)
-        new_donation.categories.add(request.POST.get('category'))
-        new_donation.institution.add(request.POST.get('institution'))
+                                               user_id=request.user.pk)
+        for category_name in categories:
+            new_donation.categories.add(Category.objects.get(name=category_name))
+            new_donation.save()
+        new_donation.institution.add(Institution.objects.get(name=request.POST.get('institution')).pk)
         new_donation.save()
         return redirect('form-confirmation')
 
