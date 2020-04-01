@@ -5,19 +5,22 @@
 
         <h2></h2>
         <div style="padding-bottom: 30px">
-            <table border=""
-                   style="border-collapse: collapse; border-style: hidden; font-size: x-large; margin: auto; column-span: all;">
+            <table border="1" style="border-collapse: collapse; border-style: hidden; font-size: large; margin: auto;">
                 <tbody>
                 <tr>
                     <th style="padding: 7px;">#</th>
                     <th>Obdarowana instytucja</th>
                     <th>Przekazanych worków</th>
-                    <th>Czego</th>
-                    <th>Data doręczenia</th>
+                    <th>Co oddałeś/aś</th>
+                    <th>Data odbioru</th>
                     <th>Status</th>
                 </tr>
                 {% for donation in donations %}
+                    {% if donation.collected == True %}
+                    <tr style="background-color: palegreen">
+                        {% else %}
                     <tr>
+                    {% endif %}
                         <td></td>
                         <td>{{ donation.institution.first }}</td>
                         <td>{{ donation.quantity }}</td>
@@ -26,16 +29,25 @@
                                 {{ category }},
                             {% endfor %}
                         </td>
-                        <td>{{ donation.pickup_date }}</td>
-                        {% if donation.collected == False %}
-                            <td>Nieodebrana</td>
-                        {% else %}
-                            <td>Odebrana</td>
-                        {% endif %}
+                        <td>{{ donation.pickup_date }}, {{ donation.pickup_time }}</td>
+                        <td>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {% if donation.collected == False %}
+                                    <input type="hidden" name="collected" value="True">
+                                    <input type="submit" class="btn" value="Odebrano">
+                                {% else %}
+                                    <input type="hidden" checked name="collected" value="False">
+                                    <input type="submit" class="btn" value="Nieodebrano">
+                                {% endif %}
+                                <input type="hidden" value="{{ donation.id }}" name="donation-id">
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
+
         </div>
     </section>
 {% endblock %}

@@ -109,3 +109,13 @@ class UserDonations(View):
     def get(self, request):
         donations = Donation.objects.filter(user=request.user).order_by('-pickup_date').order_by('collected')
         return render(request, 'user_donations.html', {'donations': donations})
+
+    def post(self, request):
+        collected = request.POST.get('collected')
+        donation_id = request.POST.get('donation-id')
+        donation = Donation.objects.get(id=donation_id)
+        donation.collected = collected
+        donation.save()
+        return redirect('user-donations')
+
+
