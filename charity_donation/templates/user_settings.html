@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2></h2>
+    <div style="padding: 40px; text-align: center">
+        <form style="display: inline-block" method="post">
+            {% csrf_token %}
+            <div style="display: inline-block">
+                <table style="border-style: dashed; font-size: x-large; padding: 15px">
+                    <tbody>
+                    <tr>
+                        <td style="padding-bottom: 10px">email: {{ form.email }}</td>
+                    </tr>
+                    <tr style="font-size: x-small; color: red">
+                        <td>{{ form.email.errors }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px">imię: {{ form.first_name }}</td>
+                    </tr>
+                    <tr style="font-size: x-small; color: red">
+                        <td>{{ form.first_name.errors }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 10px">nazwisko: {{ form.last_name }}</td>
+                    </tr>
+                    <tr style="font-size: x-small; color: red">
+                        <td>{{ form.last_name.errors }}</td>
+                    </tr>
+                    <tr style="font-size: x-small; color: red">
+                        <td>{{ form.confirm_password }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <input type="submit" class="btn" value="Zapisz zmiany">
+                <button class="btn"><a href="{% url "password-change" %}">Zmień hasło</a></button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

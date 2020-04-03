@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import ModelForm
 from django.shortcuts import render, redirect
 from django.views import View
-from charity_donation.models import *
+from django.views.generic import UpdateView
 from charity_donation.forms import *
+from .forms import ConfirmPasswordForm
 
 
 class LandingPage(View):
@@ -92,19 +92,25 @@ class DonationView(LoginRequiredMixin, View):
         return redirect('form-confirmation')
 
 
-class ConfirmationView(View):
+class ConfirmationView(LoginRequiredMixin, View):
+
+    login_url = '/login/'
 
     def get(self, request):
         return render(request, 'form-confirmation.html')
 
 
-class UserProfile(View):
+class UserProfile(LoginRequiredMixin, View):
+
+    login_url = '/login/'
 
     def get(self, request):
         return render(request, 'user_profile.html')
 
 
-class UserDonations(View):
+class UserDonations(LoginRequiredMixin, View):
+
+    login_url = '/login/'
 
     def get(self, request):
         donations = Donation.objects.filter(user=request.user).order_by('-pickup_date').order_by('collected')
@@ -117,5 +123,37 @@ class UserDonations(View):
         donation.collected = collected
         donation.save()
         return redirect('user-donations')
+
+
+class UserSettings(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+
+    model = User
+    fields = ['email', 'first_name', 'last_name']
+    template_name = 'user_settings.html'
+    success_url = '/user/profile/'
+
+    def get(self, request, *args, **kwargs):
+        if User.objects.get(id=kwargs['pk']).pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
+
+
+class ConfirmPasswordView(UpdateView):
+    form_class = ConfirmPasswordForm
+    template_name = 'confirm_password.html'
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        return redirect(f'/user/settings/{request.user.pk}/')
+
+
+class View404(View):
+
+    def get(self, request):
+        return render(request, '404.html')
+
 
 

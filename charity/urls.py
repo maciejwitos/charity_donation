@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from charity_donation.views import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,15 @@ urlpatterns = [
     path('donate/form/', DonationView.as_view(), name='donate-form'),
     path('donate/form/confirmation/', ConfirmationView.as_view(), name='form-confirmation'),
     path('user/profile/', UserProfile.as_view(), name='user-profile'),
-    path('user/donations/', UserDonations.as_view(), name='user-donations')
+    path('user/donations/', UserDonations.as_view(), name='user-donations'),
+    path('user/settings/<pk>/', UserSettings.as_view(), name='user-settings'),
+    path('user/password_confirm/', ConfirmPasswordView.as_view(), name='confirm-password'),
+    path('accounts/password_change', auth_views.PasswordChangeView.as_view(template_name='password_change_form.html',
+                                                                           success_url='/accounts/password_change/done/'),
+         name='password-change'),
+    path('accounts/password_change/done/',
+         auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'),
+         name='password-change-done'),
+    path('404/', View404.as_view(), name='404'),
+
 ]

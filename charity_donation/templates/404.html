@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div style="text-align: center; padding: 40px">
+        <div style="display: inline-block; font-size: large">Wystąpił błąd 404 wróć do <a href="{% url "landing-page" %}"
+                                                                                      style="color: #3875d7">strony
+            głównej.</a></div>
+    </div>
+{% endblock %}
